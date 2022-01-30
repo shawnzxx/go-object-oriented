@@ -43,4 +43,12 @@ func main() {
 	option = payment.CreateCashAccount()
 
 	option.ProcessPayment(500)
+
+	// use channel message passing
+	chargeCh := make(chan float32)
+	payment.CreateDebitAccount(chargeCh)
+	chargeCh <- 500
+	// prevernt early exit wait for console input defore end the app
+	var a string
+	fmt.Scanln(&a)
 }

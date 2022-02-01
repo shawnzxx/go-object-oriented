@@ -6,8 +6,19 @@ import (
 	"github.com/go-object-oriented/payment"
 )
 
+/* Best practice:
+If you working with other 3rd party library even they defined interface within their library
+still copy interface into your own consumer package (not receiver package)
+this way prevent to import package only because of you need to use interface type inside your consumer logic
+furthermore this also easier to remove the imported 3rd party library when you decide not to use them anymore
+So always define interface inside consumer package: where you need to use them, not inside the receiver package: where implement detail of interface
+*/
+type PaymentOption interface {
+	ProcessPayment(float32) bool
+}
+
 func main() {
-	// use class inheritance
+	// Inheritance sample
 	fmt.Println("use class inheritance")
 	credit := payment.CreateCreditAccount(
 		"Debra Ingram",
@@ -27,9 +38,9 @@ func main() {
 	}
 	fmt.Printf("Available credit: %v\n", credit.AvailableCredit())
 
-	// use interface inheritance
+	// Interface sample (encapsulation + polymorphism)
 	fmt.Println("use interface inheritance")
-	var option payment.PaymentOption
+	var option PaymentOption
 	// since CreditCard class implement the PaymentOption interface so can use interface as CreateCredit
 	option = payment.CreateCreditAccount(
 		"Debra Ingram",
@@ -44,7 +55,7 @@ func main() {
 
 	option.ProcessPayment(500)
 
-	// use channel message passing
+	// Message passing sample
 	chargeCh := make(chan float32)
 	payment.CreateDebitAccount(chargeCh)
 	chargeCh <- 500

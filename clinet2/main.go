@@ -25,6 +25,7 @@ type CreditAccount struct {
 // }
 
 func main() {
+	// composition sample:
 	ca := &CreditAccount{}
 	ca.AvailableFunds()
 	ca.ProcessPayment(500)

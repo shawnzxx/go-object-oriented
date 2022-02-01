@@ -7,11 +7,7 @@ import (
 	"time"
 )
 
-type PaymentOption interface {
-	ProcessPayment(float32) bool
-}
-
-// Encapsulation1: external package can not access private fileds
+// external package can not access private fileds
 type CreditCard struct {
 	ownerName       string
 	cardNumber      string
@@ -21,7 +17,7 @@ type CreditCard struct {
 	availableCredit float32
 }
 
-// Encapsulation2: external package use constructor to create CreditCard
+// external package use constructor to create CreditCard
 func CreateCreditAccount(ownerName, cardNumber string, expirationMonth, expirationYear, securityCode int) *CreditCard {
 	return &CreditCard{
 		ownerName:       ownerName,
@@ -38,7 +34,7 @@ func (c *CreditCard) ProcessPayment(amount float32) bool {
 	return true
 }
 
-// Encapsulation3: external package use getter and setter to interact with private fileds
+// external package use getter and setter to interact with private fileds
 func (c *CreditCard) OwnerName() string {
 	return c.ownerName
 }
